@@ -1,0 +1,151 @@
+:root {
+--light-blue: rgb(132, 166, 241);
+--dark-blue: rgb(57, 8, 235);
+--grey-button: grey;
+--dark-grey-card: rgb(43, 40, 88);
+--light-text: rgb(233, 235, 228);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oxygen', sans-serif;
+}
+
+/* Header Section */
+
+header {
+    background-image: linear-gradient(to right, var(--light-blue), var(--dark-blue));
+    margin-top: 0;
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+
+h1 {
+    text-align: center;
+    margin-left: 10%;
+    margin-top: 10px;
+    font-size: 200%;
+    color: white;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+}
+
+/* Search Section */
+
+.search-container {
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 25vw;
+}
+
+h2 {
+    margin-left: 10px;
+    margin-top: 20px;
+}
+
+hr {
+    margin: 20px 0 20px 10px;
+    width: 100%;
+}
+
+.saved-search-cities {
+    text-align: center;
+    background-color: var(--grey-button);
+    border-radius: 5px;
+    color: var(--light-text);
+    padding: 6px 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#city-search {
+    width: 100%;
+    margin: 15px 10px;
+    height: 35px;
+    color: var(--grey-button);
+    border-radius: 5px;
+    border: 1px solid var(--grey-button);
+    padding-left: 5px;
+
+}
+
+#search-button {
+    width: 100%;
+    margin-left: 10px;
+    background-color: var(--light-blue);
+    border-radius: 5px;
+    color: var(--light-text);
+    padding: 6px 0;
+    border: none;
+    cursor: pointer;
+}
+
+#saved-searches-list {
+    width: 100%;
+    margin-left: 10px;
+}
+
+/* Weather Data */
+
+.weather-data-container {
+    margin-left: 5%;
+    margin-top: 2vh;
+    width: 100%;
+}
+
+.current-weather-container {
+    border: 1px solid black;
+}
+
+.current-weather-container h2 {
+    font-size: 175%;
+    padding-bottom: 2vh;
+}
+
+.current-data li {
+    margin-left: 1vw;
+    padding-bottom: 2vh;
+    list-style-type: none;
+}
+
+.weather-data-container h3 {
+    margin-top: 2vh;
+    font-size: 135%;
+}
+
+.five-day-forecast-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.forecast-card {
+    margin-top: 2vh;
+    background-color: var(--dark-grey-card);
+    width: 20%;
+    color: var(--light-text);
+    padding: 5px 20px 10px 5px;
+    margin-right: 5%;
+}
+
+.forecast-card h4 {
+    font-size: 125%;
+    padding-bottom: 1vh;
+}
+
+.forecast-card p {
+    padding-bottom: 1vh;
+}
+
+.forecast-data {
+    list-style-type: none;
+}
+
+.forecast-data li {
+    padding-bottom: 2vh;
+}

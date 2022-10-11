@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts: Oxygen Ligh 300 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
+    <title>Weather Forecast</title>
+</head>
+<body>
+    <!-- Title -->
+    <header>
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <div class="flex-container">
+        <!-- Search section on left -->
+        <section class="search-container">
+            <h2>
+                Search for a City:
+            </h2>
+            <input type="text" id="city-search" placeholder="Search">
+            <button type="button" id="search-button">Search</button>
+            <hr>
+            <ul id="saved-searches-list">
+                <!-- Placeholders -->
+                <li class="saved-search-cities">New York</li>
+                <li class="saved-search-cities">Chicago</li>
+            </ul>
+        </section>
+
+        <!-- Weather data section on right -->
+        <section class="weather-data-container">
+            <section class="current-weather-container">
+                <h2>Please search a city to get weather information</h2>
+                <ul class="current-data">
+                    <li>Temp: </li>
+                    <li>Wind: </li>
+                    <li>Humidity: </li>
+                </ul>
+            </section>
+            <h3>5-Day Forecast:</h3>
+            <section class="five-day-forecast-container">
+                <figure class="forecast-card">
+                    <h4>Date1</h4>
+                    <p>Placeholder for icon</p>
+                    <ul class="forecast-data">
+                        <li>Temp: </li>
+                        <li>Wind: </li>
+                        <li>Humidity: </li>
+                    </ul>
+                </figure>
+                <figure class="forecast-card">
+                    <h4>Date2</h4>
+                    <p>Placeholder for icon</p>
+                    <ul class="forecast-data">
+                        <li>Temp: </li>
+                        <li>Wind: </li>
+                        <li>Humidity: </li>
+                    </ul>
+                </figure>
+                <figure class="forecast-card">
+                    <h4>Date3</h4>
+                    <p>Placeholder for icon</p>
+                    <ul class="forecast-data">
+                        <li>Temp: </li>
+                        <li>Wind: </li>
+                        <li>Humidity: </li>
+                    </ul>
+                </figure>
+                <figure class="forecast-card">
+                    <h4>Date4</h4>
+                    <p>Placeholder for icon</p>
+                    <ul class="forecast-data">
+                        <li>Temp: </li>
+                        <li>Wind: </li>
+                        <li>Humidity: </li>
+                    </ul>
+                </figure>
+                <figure class="forecast-card">
+                    <h4>Date5</h4>
+                    <p>Placeholder for icon</p>
+                    <ul class="forecast-data">
+                        <li>Temp: </li>
+                        <li>Wind: </li>
+                        <li>Humidity: </li>
+                    </ul>
+                </figure>
+            </section>
+        </section>
+
+        <!-- 5-day forecast just beneath -->
+        
+    </div>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
