@@ -65,6 +65,11 @@ function getWeather(queryURLCurrent) {
             liCity.classList.add("saved-search-cities");
             liCity.innerHTML = currentCity;
             newCitySaveEl.appendChild(liCity);
+
+            if (!savedSearches.includes(currentCity)) {
+                savedSearches.push(currentCity);
+                localStorage.setItem("savedSearches", savedSearches);
+            }
         })
 };
 
@@ -101,6 +106,28 @@ function getForecast(queryURL) {
 
     // Save city to local storage
         // Input value becomes last city searched?
+function renderSearches() {
+    newCitySaveEl.innerHTML == "";
+    for (let i = 0; i < savedSearches.length; i++) {
+        var savedCity = savedSearches[i];
+        var liSave = document.createElement("li");
+        liSave.classList.add("saved-search-cities");
+        liSave.innerHTML = savedCity;
+        newCitySaveEl.appendChild(liSave);
+    }
+};
+
+function init() {
+    var storedSearches = JSON.parse(localStorage.getItem("savedSearches"));
+    if (storedSearches !== null) {
+        savedSearches = storedSearches;
+        console.log("Success");
+    } else {
+        console.log("Fail");
+    };
+    renderSearches();
+};
+
     
     // Clear existing displayed data
 
@@ -121,4 +148,7 @@ searchButtonEl.addEventListener("click", function() {
     queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     getWeather(queryURLCurrent);
     getForecast(queryURL);
+    storeSearches();
 });
+
+init();
