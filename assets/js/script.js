@@ -68,7 +68,7 @@ function getWeather(queryURLCurrent) {
 
             if (!savedSearches.includes(currentCity)) {
                 savedSearches.push(currentCity);
-                localStorage.setItem("savedSearches", savedSearches);
+                localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
             }
         })
 };
@@ -87,7 +87,6 @@ function getForecast(queryURL) {
                 forecastDay = new Date();
                 forecastDate = String(newDay.getDate()+x+1).padStart(2, '0');
                 var description = yyyy + "-" + mm + "-" + forecastDate + " 12:00:00";
-                console.log(x);
                 if (data.list[i].dt_txt == description) {
                     var liFTemp = document.createElement("li");
                     var liFWind = document.createElement("li");
@@ -130,12 +129,18 @@ function init() {
 
     
     // Clear existing displayed data
-
-    // Todos:
-        // Save local storage
-        // Reset input and displayed data upon refresh
-        // Icon Displaying
-
+function clearPage() {
+    searchButtonEl.innerHTML = "Search";
+    currentCityDateEl.children[0].innerHTML = "(" + today + ")";
+    while (currentDataEl.hasChildNodes()) {
+        currentDataEl.removeChild(currentDataEl.firstChild);
+    };
+    for (let i = 0; i < forecastDataEl.length; i++) {
+        while(forecastDataEl[i].hasChildNodes()) {
+            forecastDataEl[i].removeChild(forecastDataEl[i].firstChild);
+        };
+    }
+}
 
 // USER INTERACTIONS
     // User inputs location into search box
@@ -148,7 +153,7 @@ searchButtonEl.addEventListener("click", function() {
     queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
     getWeather(queryURLCurrent);
     getForecast(queryURL);
-    storeSearches();
+    clearPage();
 });
 
 init();
