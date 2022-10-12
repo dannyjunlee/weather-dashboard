@@ -2,14 +2,17 @@
 var searchInputEl = document.getElementById("city-search");
 var searchButtonEl = document.getElementById("search-button");
 var currentDataEl = document.querySelector(".current-data");
-var currentDateEl = document.querySelector(".current-weather-container");
+var currentCityDateEl = document.querySelector(".current-weather-container");
 var forecastContainer = document.querySelector(".five-day-forecast-container");
+var forecastDataEl = document.querySelectorAll(".forecast-data");
 
 
 // DATA
 var APIKey = "fc22c201b21fb998ddae41f7cecb6958";
 var city;
 var queryURL;
+var queryURLCurrent;
+
     // Date
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -18,16 +21,13 @@ var yyyy = today.getFullYear();
 
 today = mm + '/' + dd + '/' + yyyy;
 
-currentDateEl.children[0].innerHTML = "(" + today + ")";
-console.log(today);
+currentCityDateEl.children[0].innerHTML = "(" + today + ")";
 
 for (let i = 0; i < forecastContainer.children.length; i++) {
     newDay = new Date();
     newDate = String(newDay.getDate()+i+1).padStart(2, '0');
     forecastContainer.children[i].children[0].innerHTML = mm + "/" + newDate + "/" + yyyy;
-    console.log(newDate);
-}
-
+};
 
 // FUNCTIONS
     // Fetch API
@@ -36,12 +36,9 @@ for (let i = 0; i < forecastContainer.children.length; i++) {
         // Current Weather Container:
             // City, date, weather icon in header
             // Temp, wind, humidity
-        // 5-day forecast:
-            // Dark grey cards with date on top, weather icon, tmep, wind, humidity
-function getWeather(queryURL) {
-    fetch(queryURL)
+function getWeather(queryURLCurrent) {
+    fetch(queryURLCurrent)
         .then(function (response) {
-            console.log(response);
             return response.json();
         })
         // Current weather data
@@ -49,22 +46,55 @@ function getWeather(queryURL) {
             var liTemp = document.createElement("li");
             var liWind = document.createElement("li");
             var liHumidity = document.createElement("li");
+            console.log(data.main.temp);
             var temperature = (data.main.temp - 273.15) * 9/5 + 32;
             temperature = temperature.toFixed(2);
             var wind = data.wind.speed;
             var humidity = data.main.humidity;
-            liTemp.innerHTML = "Temp: " + temperature + "°F";
+            liTemp.innerHTML = "Temp: " + temperature + " °F";
             liWind.innerHTML = "Wind: " + wind + " MPH";
             liHumidity.innerHTML = "Humidity: " + humidity + " %";
             currentDataEl.appendChild(liTemp);
             currentDataEl.appendChild(liWind);
             currentDataEl.appendChild(liHumidity);
-        })
-        // Forecast
-        .then(function (data) {
 
+            var currentCity = data.name;
+            currentCityDateEl.children[0].innerHTML = currentCity + " (" + today + ")";
         })
 };
+
+       // 5-day forecast:
+            // Dark grey cards with date on top, weather icon, tmep, wind, humidity
+function getForecast(queryURL) {
+    fetch(queryURL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            var x = 0;
+            for (let i = 0; i < data.list.length; i++) {
+                // Icons
+                newDay = new Date();
+                newDate = String(newDay.getDate()+x+1).padStart(2, '0');
+                var description = yyyy + "-" + mm + "-" + newDate + " 12:00:00";
+                if (data.list[i]["dt_text"] === description) {
+                    var liTemp = document.createElement("li");
+                    var liWind = document.createElement("li");
+                    var liHumidity = document.createElement("li");
+                    liTemp.innerHTML = "Temp: " + data.list[i].main.temp + " °F";
+                    liWind.innerHTML = "Wind: " + data.list[i].wind.speed + " MPH";
+                    liHumidity.innerHTML = "Humidity: " + data.list[i].main.humidity + " %";
+                    forecastDataEl[x].appendChild(liTemp);
+                    forecastDataEl[x].appendChild(liWind);
+                    forecastDataEl[x].appendChild(liHumidity);
+                    x++;
+                    console.log(data.list[i].main.humidity);
+                };
+            };
+        });
+};
+
+
 
     // Save city to local storage
         // Input value becomes last city searched?
@@ -76,6 +106,8 @@ function getWeather(queryURL) {
 // INITIALIZATION
 searchButtonEl.addEventListener("click", function() {
     city = searchInputEl.value;
-    queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
-    getWeather(queryURL);
+    queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+    getWeather(queryURLCurrent);
+    getForecast(queryURL);
 });
