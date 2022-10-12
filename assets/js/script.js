@@ -46,7 +46,6 @@ function getWeather(queryURLCurrent) {
             var liTemp = document.createElement("li");
             var liWind = document.createElement("li");
             var liHumidity = document.createElement("li");
-            console.log(data.main.temp);
             var temperature = (data.main.temp - 273.15) * 9/5 + 32;
             temperature = temperature.toFixed(2);
             var wind = data.wind.speed;
@@ -74,27 +73,25 @@ function getForecast(queryURL) {
             var x = 0;
             for (let i = 0; i < data.list.length; i++) {
                 // Icons
-                newDay = new Date();
-                newDate = String(newDay.getDate()+x+1).padStart(2, '0');
-                var description = yyyy + "-" + mm + "-" + newDate + " 12:00:00";
-                if (data.list[i]["dt_text"] === description) {
-                    var liTemp = document.createElement("li");
-                    var liWind = document.createElement("li");
-                    var liHumidity = document.createElement("li");
-                    liTemp.innerHTML = "Temp: " + data.list[i].main.temp + " °F";
-                    liWind.innerHTML = "Wind: " + data.list[i].wind.speed + " MPH";
-                    liHumidity.innerHTML = "Humidity: " + data.list[i].main.humidity + " %";
-                    forecastDataEl[x].appendChild(liTemp);
-                    forecastDataEl[x].appendChild(liWind);
-                    forecastDataEl[x].appendChild(liHumidity);
+                forecastDay = new Date();
+                forecastDate = String(newDay.getDate()+x+1).padStart(2, '0');
+                var description = yyyy + "-" + mm + "-" + forecastDate + " 12:00:00";
+                console.log(x);
+                if (data.list[i].dt_txt == description) {
+                    var liFTemp = document.createElement("li");
+                    var liFWind = document.createElement("li");
+                    var liFHumidity = document.createElement("li");
+                    liFTemp.innerHTML = "Temp: " + data.list[i].main.temp + " °F";
+                    liFWind.innerHTML = "Wind: " + data.list[i].wind.speed + " MPH";
+                    liFHumidity.innerHTML = "Humidity: " + data.list[i].main.humidity + " %";
+                    forecastDataEl[x].appendChild(liFTemp);
+                    forecastDataEl[x].appendChild(liFWind);
+                    forecastDataEl[x].appendChild(liFHumidity);
                     x++;
-                    console.log(data.list[i].main.humidity);
                 };
             };
         });
 };
-
-
 
     // Save city to local storage
         // Input value becomes last city searched?
