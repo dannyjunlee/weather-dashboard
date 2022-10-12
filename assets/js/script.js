@@ -5,6 +5,7 @@ var currentDataEl = document.querySelector(".current-data");
 var currentCityDateEl = document.querySelector(".current-weather-container");
 var forecastContainer = document.querySelector(".five-day-forecast-container");
 var forecastDataEl = document.querySelectorAll(".forecast-data");
+var newCitySaveEl = document.getElementById("saved-searches-list");
 
 
 // DATA
@@ -12,6 +13,7 @@ var APIKey = "fc22c201b21fb998ddae41f7cecb6958";
 var city;
 var queryURL;
 var queryURLCurrent;
+var savedSearches = [];
 
     // Date
 var today = new Date();
@@ -59,6 +61,10 @@ function getWeather(queryURLCurrent) {
 
             var currentCity = data.name;
             currentCityDateEl.children[0].innerHTML = currentCity + " (" + today + ")";
+            var liCity = document.createElement("li");
+            liCity.classList.add("saved-search-cities");
+            liCity.innerHTML = currentCity;
+            newCitySaveEl.appendChild(liCity);
         })
 };
 
@@ -95,6 +101,14 @@ function getForecast(queryURL) {
 
     // Save city to local storage
         // Input value becomes last city searched?
+    
+    // Clear existing displayed data
+
+    // Todos:
+        // Save local storage
+        // Reset input and displayed data upon refresh
+        // Icon Displaying
+
 
 // USER INTERACTIONS
     // User inputs location into search box
