@@ -63,6 +63,13 @@ function getWeather(queryURLCurrent) {
             var currentCity = data.name;
             currentCityDateEl.children[0].innerHTML = currentCity + " (" + today + ")";
 
+            var weatherCode = data.weather[0].icon;
+            console.log(weatherCode);
+            var weatherIcon = "https://openweathermap.org/img/wn/" + weatherCode + "@2x.png";
+            var liWeather = document.createElement("img");
+            liWeather.src = weatherIcon;
+            currentCityDateEl.children[0].append(liWeather);
+
             if (!savedSearches.includes(currentCity)) {
                 savedSearches.push(currentCity);
                 localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
@@ -84,7 +91,6 @@ function getForecast(queryURL) {
         .then(function (data) {
             var x = 0;
             for (let i = 0; i < data.list.length; i++) {
-                // Icons
                 forecastDay = new Date();
                 forecastDate = String(newDay.getDate()+x+1).padStart(2, '0');
                 var description = yyyy + "-" + mm + "-" + forecastDate + " 12:00:00";
@@ -92,9 +98,15 @@ function getForecast(queryURL) {
                     var liFTemp = document.createElement("li");
                     var liFWind = document.createElement("li");
                     var liFHumidity = document.createElement("li");
+                    var liFIcon = document.createElement("img");
+                    liFIcon.classList.add("forecast-icon");
+                    iconCode = data.list[i].weather[0].icon;
+                    iconF = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                    liFIcon.src = iconF;
                     liFTemp.innerHTML = "Temp: " + data.list[i].main.temp + " °F";
                     liFWind.innerHTML = "Wind: " + data.list[i].wind.speed + " MPH";
                     liFHumidity.innerHTML = "Humidity: " + data.list[i].main.humidity + " %";
+                    forecastDataEl[x].appendChild(liFIcon);
                     forecastDataEl[x].appendChild(liFTemp);
                     forecastDataEl[x].appendChild(liFWind);
                     forecastDataEl[x].appendChild(liFHumidity);
@@ -121,9 +133,6 @@ function init() {
     var storedSearches = JSON.parse(localStorage.getItem("savedSearches"));
     if (storedSearches !== null) {
         savedSearches = storedSearches;
-        console.log("Success");
-    } else {
-        console.log("Fail");
     };
     renderSearches();
 };
@@ -163,8 +172,6 @@ searchButtonEl.addEventListener("click", function() {
 
 
 init();
-
-console.log(savedSearches.length);
 
 newCitySaveEl.addEventListener("click", function(event) {
     var element = event.target;

@@ -13,6 +13,16 @@
     font-family: 'Oxygen', sans-serif;
 }
 
+img {
+    height: 5%;
+    width: 5%;
+}
+
+.forecast-icon {
+    height: 50%;
+    width: 50%;
+}
+
 /* Header Section */
 
 header {
