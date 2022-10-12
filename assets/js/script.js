@@ -6,6 +6,7 @@ var currentCityDateEl = document.querySelector(".current-weather-container");
 var forecastContainer = document.querySelector(".five-day-forecast-container");
 var forecastDataEl = document.querySelectorAll(".forecast-data");
 var newCitySaveEl = document.getElementById("saved-searches-list");
+var savedSearchCitiesEl = document.querySelectorAll(".saved-search-cities");
 
 
 // DATA
@@ -61,14 +62,14 @@ function getWeather(queryURLCurrent) {
 
             var currentCity = data.name;
             currentCityDateEl.children[0].innerHTML = currentCity + " (" + today + ")";
-            var liCity = document.createElement("li");
-            liCity.classList.add("saved-search-cities");
-            liCity.innerHTML = currentCity;
-            newCitySaveEl.appendChild(liCity);
 
             if (!savedSearches.includes(currentCity)) {
                 savedSearches.push(currentCity);
                 localStorage.setItem("savedSearches", JSON.stringify(savedSearches));
+                var liCity = document.createElement("li");
+                liCity.classList.add("saved-search-cities");
+                liCity.innerHTML = currentCity;
+                newCitySaveEl.appendChild(liCity);
             }
         })
 };
@@ -147,6 +148,7 @@ function clearPage() {
     // User clicks on city in saved searches list
 
 // INITIALIZATION
+
 searchButtonEl.addEventListener("click", function() {
     city = searchInputEl.value;
     queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
@@ -156,4 +158,22 @@ searchButtonEl.addEventListener("click", function() {
     clearPage();
 });
 
+    // Click saved cities to load page as well
+
+
+
 init();
+
+console.log(savedSearches.length);
+
+newCitySaveEl.addEventListener("click", function(event) {
+    var element = event.target;
+    if (element.matches("li") === true) {
+        city = element.innerHTML;
+        queryURLCurrent = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+        queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+        getWeather(queryURLCurrent);
+        getForecast(queryURL);
+        clearPage();
+    }
+});
